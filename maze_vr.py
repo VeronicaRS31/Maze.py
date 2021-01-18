@@ -11,6 +11,13 @@ maze_runner.turtlesize(1)
 maze_runner.color("pink")
 maze_runner.hideturtle()
 walls.pencolor("black")
+font_setup = ("Arial", 20, "normal")
+timer = 5
+counter_interval = 1000   #1000 represents 1 second
+timer_up = False
+counter =  trtl.Turtle()
+counter.penup()
+counter.goto(400,300)
 
 def draw_door(x):
   walls.forward(x)
@@ -32,8 +39,24 @@ def runner_right():
 
 def runner_move():
   maze_runner.forward(5)
- 
 
+def countdown():
+  global timer, timer_up
+  counter.clear()
+  if timer <= 0:
+    counter.write("Time's Up", font=font_setup)
+    timer_up = True
+    wn.clear()
+    maze_runner.hideturtle()
+  else:
+    counter.write("Timer: " + str(timer), font=font_setup)
+    timer -= 1
+    counter.getscreen().ontimer(countdown, counter_interval) 
+
+ 
+def start_game():
+  if True:
+     countdown()
 
 for i in range(25):
   walls.left(90)
@@ -68,6 +91,10 @@ for i in range(25):
   walllenght+=15
   walls.hideturtle()
   maze_runner.showturtle()
+
+start_game()
+
+
 
 wn=trtl.Screen()
 wn.onkeypress(runner_down,"a")
